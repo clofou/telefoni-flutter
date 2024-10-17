@@ -18,6 +18,8 @@ class SellCard extends StatelessWidget {
   final Color backgroundColor;
   final Color foregroundColor;
 
+
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -60,7 +62,9 @@ class SellCard extends StatelessWidget {
               Text(
                 subtitle,
                 style: TextStyle(
-                    fontFamily: "Poppins", color: Theme.of(context).hintColor, fontSize: 16),
+                    fontFamily: "Poppins",
+                    color: Theme.of(context).hintColor,
+                    fontSize: 16),
               ),
               const SizedBox(
                 height: 5,

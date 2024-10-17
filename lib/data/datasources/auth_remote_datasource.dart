@@ -18,7 +18,7 @@ class AuthRemoteDataSource {
       final connexionResponse = ConnexionModel.fromJson(data);
 
       // Stocker le token dans SharedPreferences
-      TokenManager.saveToken(connexionResponse.bearer!);
+      await TokenManager.saveToken(connexionResponse.bearer!);
       return connexionResponse;
     } else {
       throw Exception('Impossible de se Connecter');

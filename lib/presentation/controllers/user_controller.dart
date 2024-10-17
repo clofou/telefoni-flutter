@@ -5,7 +5,14 @@ import 'package:telefoni_dashboard/domain/use_cases/recuper_current_user_info.da
 
 class UserController extends GetxController {
   final RecuperCurrentUserInfo recuperCurrentUserInfo;
-  var currentUser = User(nom: "", email: "", adresse: "", role: "", photoUrl: "", telephone: "").obs;
+  var currentUser = User(
+          nom: "",
+          email: "",
+          adresse: "",
+          role: "",
+          photoUrl: "",
+          telephone: "")
+      .obs;
   var isLoading = false.obs;
   var errorMessage = "".obs;
 

@@ -1,10 +1,10 @@
 class User {
-  final String nom;
-  final String email;
-  final String adresse;
-  final String role;
-  final String photoUrl;
-  final String telephone;
+  final String? nom;
+  final String? email;
+  final String? adresse;
+  final String? role;
+  final String? photoUrl;
+  final String? telephone;
 
   User(
       {required this.nom,

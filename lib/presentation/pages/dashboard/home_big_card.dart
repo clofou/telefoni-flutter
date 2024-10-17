@@ -1,9 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:telefoni_dashboard/data/datasources/vente_remote_datasource.dart';
+import 'package:telefoni_dashboard/data/repositories/vente_repository_impl.dart';
+import 'package:telefoni_dashboard/domain/use_cases/recuperer_vente_total.dart';
+import 'package:telefoni_dashboard/presentation/controllers/display_vente_total_controller.dart';
 import 'package:telefoni_dashboard/presentation/widgets/sell_card.dart';
+import 'package:get/get.dart';
+import 'package:telefoni_dashboard/data/datasources/commande_remote_data_source.dart';
+import 'package:telefoni_dashboard/data/repositories/commande_repository_impl.dart';
+import 'package:telefoni_dashboard/domain/use_cases/recupere_nombre_commande.dart';
+import 'package:telefoni_dashboard/domain/use_cases/recuperer_liste_commande.dart';
+import 'package:telefoni_dashboard/presentation/controllers/commande_controller.dart';
 
 class HomeBigCard extends StatelessWidget {
-  const HomeBigCard({super.key});
+  HomeBigCard({super.key});
+
+  final CommandeController commandeController = Get.put(CommandeController(
+    recupereNombreCommande: RecupereNombreCommande(
+      repository: CommandeRepositoryImpl(
+          commandeRemoteDataSource: CommandeRemoteDataSource()),
+    ),
+    recupererListeCommande: RecupererListeCommande(
+      repository: CommandeRepositoryImpl(
+          commandeRemoteDataSource: CommandeRemoteDataSource()),
+    ),
+  ));
+
+  final DisplayVenteTotalController displayVenteTotalController =
+      Get.put(DisplayVenteTotalController(
+    recupererVenteTotal: RecupererVenteTotal(
+      repository: VenteRepositoryImpl(VenteRemoteDataSource()),
+    ),
+  ));
 
   @override
   Widget build(BuildContext context) {
@@ -68,30 +96,35 @@ class HomeBigCard extends StatelessWidget {
           const SizedBox(
             height: 30,
           ),
-          const Wrap(
+          Wrap(
             runSpacing: 10,
             children: [
-              SellCard(
-                  iconPath: "assets/icons/vente_icon.svg",
-                  title: "CFA 300M",
-                  subtitle: "Vente Total",
-                  info: "+8% depuis hier",
-                  backgroundColor: Color.fromARGB(170, 252, 190, 203),
-                  foregroundColor: Color(0xFFFA5A7D)),
-              SizedBox(
+              Obx(() {
+                return SellCard(
+                    iconPath: "assets/icons/vente_icon.svg",
+                    title:
+                        "CFA ${displayVenteTotalController.venteTotal.value.totalMontantVentes} ${displayVenteTotalController.suffix.value}",
+                    subtitle: "Vente Total",
+                    info: "${displayVenteTotalController.venteTotal.value.pourcentageVariation}% depuis hier",
+                    backgroundColor: const Color.fromARGB(170, 252, 190, 203),
+                    foregroundColor: const Color(0xFFFA5A7D));
+              }),
+              const SizedBox(
                 width: 20,
               ),
-              SellCard(
-                  iconPath: "assets/icons/commande_icon.svg",
-                  title: "300",
-                  info: "+5% depuis hier",
-                  subtitle: "COmmandes",
-                  backgroundColor: Color.fromARGB(255, 247, 226, 169),
-                  foregroundColor: Color.fromARGB(255, 212, 162, 22)),
-              SizedBox(
+              Obx(() {
+                return SellCard(
+                    iconPath: "assets/icons/commande_icon.svg",
+                    title: commandeController.nombreCommande.value,
+                    info: "+5% depuis hier",
+                    subtitle: "COmmandes",
+                    backgroundColor: const Color.fromARGB(255, 247, 226, 169),
+                    foregroundColor: const Color.fromARGB(255, 212, 162, 22));
+              }),
+              const SizedBox(
                 width: 20,
               ),
-              SellCard(
+              const SellCard(
                   iconPath: "assets/icons/newuser_icon.svg",
                   title: "8",
                   info: "0.5% depuis hier",

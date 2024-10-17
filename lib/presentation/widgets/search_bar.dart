@@ -23,50 +23,16 @@ class MySearchBar extends StatelessWidget {
       final user = userController.currentUser.value;
 
       return isSmallScreen
-          ? Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: MyCustomTextField(
-                    prefixIcon: Icon(
-                      Icons.search,
-                      color: Theme.of(context).primaryColor,
-                    ),
-                    hintText: "Recherche ici...",
-                  ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    IconButton(
-                      icon: const Icon(Icons.menu),
-                      onPressed: () {
-                        Scaffold.of(context).openDrawer();
-                      },
-                    ),
-                    Stack(
-                      children: [
-                        Container(
-                          width: 50,
-                          height: 50,
-                          decoration: const BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(8)),
-                            color: Color(0XFFE0EEDB),
-                          ),
-                          padding: const EdgeInsets.all(8),
-                          child: Center(
-                            child: Icon(
-                              Icons.notifications_none_outlined,
-                              color: Theme.of(context).primaryColor,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ],
-            )
+          ? Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: MyCustomTextField(
+              prefixIcon: Icon(
+                Icons.search,
+                color: Theme.of(context).primaryColor,
+              ),
+              hintText: "Recherche ici...",
+            ),
+          )
           : Container(
               height: 100,
               padding: const EdgeInsets.symmetric(horizontal: 7),
@@ -111,8 +77,8 @@ class MySearchBar extends StatelessWidget {
                     decoration: BoxDecoration(
                       borderRadius: const BorderRadius.all(Radius.circular(16)),
                       image: DecorationImage(
-                        image: user.photoUrl.isNotEmpty
-                            ? NetworkImage(user.photoUrl)
+                        image: user.photoUrl != null
+                            ? NetworkImage(user.photoUrl!)
                             : const AssetImage("assets/images/spider.jpg")
                                 as ImageProvider,
                         fit: BoxFit.cover,
@@ -126,7 +92,7 @@ class MySearchBar extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        user.nom.isEmpty ? "Nom d'utilisateur" : user.nom,
+                        user.nom!,
                         style: const TextStyle(
                           fontFamily: "PatrickHandSC",
                           fontSize: 24,
@@ -134,7 +100,7 @@ class MySearchBar extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        user.role.isEmpty ? "Rôle" : user.role,
+                        user.role!,
                         style: const TextStyle(fontSize: 14),
                       ),
                     ],

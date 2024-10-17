@@ -8,7 +8,7 @@ class RecuperCurrentUserInfo {
 
   RecuperCurrentUserInfo({required this.repository});
 
-  Future<Either<Failure, User>> execute() async{
+  Future<Either<Failure, User>> execute() async {
     return await repository.getUserData();
   }
 }

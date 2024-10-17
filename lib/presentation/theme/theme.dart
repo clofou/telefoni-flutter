@@ -4,7 +4,6 @@ class AppTheme {
   static ThemeData lightTheme = ThemeData(
     hintColor: const Color(0xFF425166),
     primaryColor: const Color(0xFF4ACF16),
-    scaffoldBackgroundColor: const Color.fromARGB(255, 186, 240, 164),
     buttonTheme: const ButtonThemeData(
         buttonColor: Color(0xFF4ACF16), shape: BeveledRectangleBorder()),
     primarySwatch: Colors.green,

@@ -1,15 +1,11 @@
 class Commande {
   final int id;
-  final String title;
-  final double montant;
-  final String vendeur;
+  final String nom;
+  final double prix;
+  final String statut;
   final String acheteur;
 
-  Commande({
-    required this.id,
-    required this.title,
-    required this.montant,
-    required this.vendeur,
-    required this.acheteur,
-  });
+  Commande({required this.id, required this.nom, required this.prix, required this.statut, required this.acheteur});
+
+
 }

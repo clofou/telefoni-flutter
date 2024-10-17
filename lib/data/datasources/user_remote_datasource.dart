@@ -1,20 +1,15 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:telefoni_dashboard/core/constants.dart';
+import 'package:telefoni_dashboard/core/utils/token_manager.dart';
 import 'package:telefoni_dashboard/data/models/user_model.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class UserRemoteDataSource {
   // Future to fetch user data with Bearer Token from local storage
   Future<UserModel> fetchUserData() async {
     // Récupérer le Bearer token stocké
-    final prefs = await SharedPreferences.getInstance();
-    final token = prefs.getString('token');
 
-    if (token == null || token.isEmpty) {
-      throw Exception('No token found');
-    }
-
+    final token = await TokenManager.getToken();
     // Envoyer la requête avec le Bearer token dans les en-têtes
     final response = await http.get(
       Uri.parse('$baseUrl/user/current'),
@@ -23,13 +18,12 @@ class UserRemoteDataSource {
         'Content-Type': 'application/json',
       },
     );
-    print("object");
+
+    final userResponse = UserModel.fromJson(jsonDecode(response.body));
 
     if (response.statusCode == 200) {
-      print(response.body);
-      return UserModel.fromJson(jsonDecode(response.body));
+      return userResponse;
     } else if (response.statusCode == 401) {
-      print(response);
       // Le token a peut-être expiré, déconnexion de l'utilisateur
       throw Exception('Token expired, please log in again.');
     } else {

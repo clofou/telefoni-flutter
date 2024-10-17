@@ -1,29 +1,56 @@
 import 'package:get/get.dart';
-import 'package:telefoni_dashboard/data/models/commande_model.dart';
-import 'package:telefoni_dashboard/domain/use_cases/afficher_liste_de_commande.dart';
-import 'package:telefoni_dashboard/domain/use_cases/ajouter_commande.dart';
-
+import 'package:telefoni_dashboard/core/errors/failures.dart';
+import 'package:telefoni_dashboard/domain/entity/commande.dart';
+import 'package:telefoni_dashboard/domain/use_cases/recupere_nombre_commande.dart';
+import 'package:telefoni_dashboard/domain/use_cases/recuperer_liste_commande.dart';
 
 class CommandeController extends GetxController {
-  final AfficherListeDeCommandes afficherListeDeCommandes;
-  final AjouterCommande ajouterCommande;
+  final RecupereNombreCommande recupereNombreCommande;
+  final RecupererListeCommande recupererListeCommande;
 
-  var commandes = <CommandeModel>[].obs;
+  var commandes = <Commande>[].obs;
+  var nombreCommande = "0".obs;
+  var errorMessageCommandeList = "".obs;
+  var errorMessageNombre = "".obs;
+  var isLoadingList = false.obs;
+  var isLoadingNumber = false.obs;
 
-  CommandeController(this.afficherListeDeCommandes, this.ajouterCommande);
+  CommandeController(
+      {required this.recupereNombreCommande,
+      required this.recupererListeCommande});
 
   @override
   void onInit() {
     super.onInit();
     fetchCommandes();
+    numberOfCommandes();
   }
 
   void fetchCommandes() async {
-    commandes.value = await afficherListeDeCommandes.call();
+    isLoadingList.value = true;
+    final result = await recupererListeCommande.execute();
+    result.fold((failure) {
+      if (failure is ServerFailure) {
+        errorMessageCommandeList.value =
+            "Impossible de recuperer la liste de commandes";
+        isLoadingList.value = false;
+      }
+    }, (commandesList) {
+      commandes.value = commandesList;
+      isLoadingList.value = false;
+    });
   }
 
-  void addCommande(CommandeModel commande) async {
-    await ajouterCommande.call(commande);
-    fetchCommandes(); // Recharger la liste des commandes
+  void numberOfCommandes() async {
+    isLoadingNumber.value = true;
+    final result = await recupereNombreCommande.execute();
+
+    result.fold((failure) {
+      if (failure is ServerFailure) {
+        errorMessageNombre.value = "Nombre ??";
+      }
+    }, (nombre) {
+      nombreCommande.value = nombre;
+    });
   }
 }
