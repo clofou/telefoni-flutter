@@ -25,4 +25,16 @@ class UserRepositoryImpl implements UserRepository {
       return Left(ServerFailure());
     }
   }
+
+  @override
+  Future<Either<Failure, Map<String, dynamic>>>
+      getNouveauxUtilisateursAvecPourcentage() async {
+    try {
+      final response =
+          await userRemoteDataSource.getNouveauxUtilisateursAvecPourcentage();
+      return Right(response);
+    } catch (e) {
+      return Left(ServerFailure());
+    }
+  }
 }

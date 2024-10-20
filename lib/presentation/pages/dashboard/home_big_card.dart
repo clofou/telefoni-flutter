@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:telefoni_dashboard/data/datasources/user_remote_datasource.dart';
 import 'package:telefoni_dashboard/data/datasources/vente_remote_datasource.dart';
+import 'package:telefoni_dashboard/data/repositories/user_repository_impl.dart';
 import 'package:telefoni_dashboard/data/repositories/vente_repository_impl.dart';
+import 'package:telefoni_dashboard/domain/use_cases/recuperer_nouveau_utilisateur.dart';
 import 'package:telefoni_dashboard/domain/use_cases/recuperer_vente_total.dart';
 import 'package:telefoni_dashboard/presentation/controllers/display_vente_total_controller.dart';
+import 'package:telefoni_dashboard/presentation/pages/dashboard/nouveau_utilisateur_page.dart';
+import 'package:telefoni_dashboard/presentation/widgets/new_user_controller.dart';
 import 'package:telefoni_dashboard/presentation/widgets/sell_card.dart';
 import 'package:get/get.dart';
 import 'package:telefoni_dashboard/data/datasources/commande_remote_data_source.dart';
@@ -30,6 +35,15 @@ class HomeBigCard extends StatelessWidget {
       Get.put(DisplayVenteTotalController(
     recupererVenteTotal: RecupererVenteTotal(
       repository: VenteRepositoryImpl(VenteRemoteDataSource()),
+    ),
+  ));
+
+  final UtilisateurController utilisateurController =
+      Get.put(UtilisateurController(
+    recupereNouveauxUtilisateurs: RecupereNouveauxUtilisateurs(
+      repository: UserRepositoryImpl(
+        userRemoteDataSource: UserRemoteDataSource(),
+      ),
     ),
   ));
 
@@ -105,7 +119,8 @@ class HomeBigCard extends StatelessWidget {
                     title:
                         "CFA ${displayVenteTotalController.venteTotal.value.totalMontantVentes} ${displayVenteTotalController.suffix.value}",
                     subtitle: "Vente Total",
-                    info: "${displayVenteTotalController.venteTotal.value.pourcentageVariation}% depuis hier",
+                    info:
+                        "${displayVenteTotalController.venteTotal.value.pourcentageVariation}% depuis hier",
                     backgroundColor: const Color.fromARGB(170, 252, 190, 203),
                     foregroundColor: const Color(0xFFFA5A7D));
               }),
@@ -115,22 +130,38 @@ class HomeBigCard extends StatelessWidget {
               Obx(() {
                 return SellCard(
                     iconPath: "assets/icons/commande_icon.svg",
-                    title: commandeController.nombreCommande.value,
-                    info: "+5% depuis hier",
-                    subtitle: "COmmandes",
+                    title: commandeController.commandes.length.toString(),
+                    info:
+                        "${commandeController.nombreCommande.value}% depuis hier",
+                    subtitle: "Commandes",
                     backgroundColor: const Color.fromARGB(255, 247, 226, 169),
                     foregroundColor: const Color.fromARGB(255, 212, 162, 22));
               }),
               const SizedBox(
                 width: 20,
               ),
-              const SellCard(
-                  iconPath: "assets/icons/newuser_icon.svg",
-                  title: "8",
-                  info: "0.5% depuis hier",
-                  subtitle: "Nouveau User",
-                  backgroundColor: Color.fromARGB(255, 214, 247, 162),
-                  foregroundColor: Color.fromARGB(255, 153, 226, 35)),
+              Obx(() {
+                return GestureDetector(
+                  onTap: () {
+                    Get.to(
+                      () => NouveauxUtilisateursPage(
+                        utilisateurs: utilisateurController.utilisateurs,
+                        pourcentageVariation:
+                            utilisateurController.pourcentageVariation.value,
+                      ),
+                    );
+                  },
+                  child: SellCard(
+                    iconPath: "assets/icons/newuser_icon.svg",
+                    title: utilisateurController.utilisateurs.length.toString(),
+                    info:
+                        "${utilisateurController.pourcentageVariation.value}% depuis hier",
+                    subtitle: "Nouveaux utilisateurs",
+                    backgroundColor: const Color.fromARGB(255, 214, 247, 162),
+                    foregroundColor: const Color.fromARGB(255, 153, 226, 35),
+                  ),
+                );
+              }),
             ],
           ),
         ],

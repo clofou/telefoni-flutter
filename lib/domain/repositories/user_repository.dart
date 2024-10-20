@@ -4,4 +4,5 @@ import 'package:telefoni_dashboard/domain/entity/user.dart';
 
 abstract class UserRepository {
   Future<Either<Failure, User>> getUserData();
+  Future<Either<Failure , Map<String, dynamic>>> getNouveauxUtilisateursAvecPourcentage();
 }

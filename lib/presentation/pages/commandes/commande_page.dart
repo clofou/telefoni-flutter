@@ -34,7 +34,7 @@ class CommandePage extends StatelessWidget {
       }
       return Column(
         children: [
-          const MySearchBar(),
+          MySearchBar(),
           const SizedBox(
             height: 10,
           ),

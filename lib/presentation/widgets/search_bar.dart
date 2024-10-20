@@ -4,12 +4,15 @@ import 'package:telefoni_dashboard/presentation/controllers/user_controller.dart
 import 'package:telefoni_dashboard/presentation/widgets/textfield.dart';
 
 class MySearchBar extends StatelessWidget {
-  const MySearchBar({super.key});
+  MySearchBar({super.key});
+
+  final SearchController searchController = Get.put(SearchController());
 
   @override
   Widget build(BuildContext context) {
     final bool isSmallScreen = MediaQuery.of(context).size.width < 800;
     final UserController userController = Get.find<UserController>();
+    TextEditingController search = TextEditingController();
 
     return Obx(() {
       if (userController.isLoading.value) {
@@ -24,15 +27,22 @@ class MySearchBar extends StatelessWidget {
 
       return isSmallScreen
           ? Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: MyCustomTextField(
-              prefixIcon: Icon(
-                Icons.search,
-                color: Theme.of(context).primaryColor,
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: MyCustomTextField(
+                controller: search,
+                onChanged: (p0) {
+                  Obx(() {
+                    searchController.text = p0;
+                    return null;
+                  });
+                },
+                prefixIcon: Icon(
+                  Icons.search,
+                  color: Theme.of(context).primaryColor,
+                ),
+                hintText: "Recherche ici...",
               ),
-              hintText: "Recherche ici...",
-            ),
-          )
+            )
           : Container(
               height: 100,
               padding: const EdgeInsets.symmetric(horizontal: 7),
@@ -109,7 +119,8 @@ class MySearchBar extends StatelessWidget {
                   // Icone pour rediriger vers le profil
                   InkWell(
                     onTap: () {
-                      Get.toNamed('/profile'); // Redirection vers la page de profil
+                      Get.toNamed(
+                          '/profile'); // Redirection vers la page de profil
                     },
                     child: const Icon(Icons.arrow_drop_down_sharp),
                   ),

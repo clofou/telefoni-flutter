@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
 class MyCustomTextField extends StatelessWidget {
-  const MyCustomTextField(
+  MyCustomTextField(
       {super.key,
+      this.onChanged,
       this.controller,
       this.keyboardType,
       this.mykey,
@@ -18,6 +19,7 @@ class MyCustomTextField extends StatelessWidget {
   final String? hintText;
   final String? labelText;
   final bool obscureText;
+  void Function(String)? onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +32,7 @@ class MyCustomTextField extends StatelessWidget {
             style: const TextStyle(fontFamily: "PatrickHand", fontSize: 24),
           ),
         TextFormField(
+          onChanged: onChanged,
           cursorColor: Theme.of(context).primaryColor,
           obscureText: obscureText,
           key: mykey,

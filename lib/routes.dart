@@ -2,6 +2,7 @@ import 'package:get/get_navigation/src/routes/get_route.dart';
 import 'package:telefoni_dashboard/presentation/pages/commandes/commande_page.dart';
 import 'package:telefoni_dashboard/presentation/pages/connexion/connexion_page.dart';
 import 'package:telefoni_dashboard/presentation/pages/dashboard/dashboard_page.dart';
+import 'package:telefoni_dashboard/presentation/pages/leaderboard/boutique_table_all.dart';
 import 'package:telefoni_dashboard/presentation/pages/template.dart';
 
 class AppRoutes {
@@ -10,6 +11,7 @@ class AppRoutes {
     GetPage(name: '/dashboard', page: () => DashboardPage()),
     GetPage(name: '/commandes', page: () => CommandePage()),
     GetPage(name: '/template', page: () => TemplatePage()),
-    // Ajoutez d'autres routes ici
+    GetPage(name: '/boutique_all', page: () => BoutiqueTableAll()),
+     // Ajoutez d'autres routes ici
   ];
 }
