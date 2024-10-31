@@ -7,6 +7,7 @@ import 'package:telefoni_dashboard/presentation/pages/leaderboard/boutique_table
 import 'package:telefoni_dashboard/presentation/pages/leaderboard/leaderboard_page.dart';
 import 'package:telefoni_dashboard/presentation/pages/parametre/parametre_page.dart';
 import 'package:telefoni_dashboard/presentation/pages/produits/telephone_page.dart';
+import 'package:telefoni_dashboard/presentation/theme.dart';
 import 'package:telefoni_dashboard/presentation/widgets/navigation_rail.dart'; // Exemple d'une page
 
 class TemplatePage extends StatelessWidget {
@@ -28,7 +29,7 @@ class TemplatePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 186, 240, 164),
+      backgroundColor: MyColors.background,
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
         child: Row(

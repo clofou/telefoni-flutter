@@ -91,7 +91,7 @@ class BoutiqueTableAll extends StatelessWidget {
                   const Text(
                     "Les Boutiques",
                     style: TextStyle(
-                        fontFamily: "PatrickHandSC",
+                        fontFamily: "Poppins",
                         fontSize: 24,
                         color: Colors.black),
                   )

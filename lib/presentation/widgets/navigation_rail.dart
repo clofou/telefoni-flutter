@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:telefoni_dashboard/core/constants.dart';
 import 'package:telefoni_dashboard/data/datasources/auth_local_datasource.dart';
@@ -11,6 +12,7 @@ import 'package:telefoni_dashboard/domain/use_cases/se_deconnecter.dart';
 import 'package:telefoni_dashboard/presentation/controllers/deconnexion_controller.dart';
 import 'package:telefoni_dashboard/presentation/controllers/navigation/navigation_controller.dart';
 import 'package:telefoni_dashboard/presentation/controllers/user_controller.dart';
+import 'package:telefoni_dashboard/presentation/theme.dart';
 
 class MyNavigationRail extends StatelessWidget {
   MyNavigationRail({super.key});
@@ -36,42 +38,98 @@ class MyNavigationRail extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width * 0.25,
+      padding: const EdgeInsets.symmetric(horizontal: 10),
       decoration: BoxDecoration(
+        borderRadius: const BorderRadius.all(Radius.elliptical(24, 24)),
         color: Colors.white,
         border: Border.all(
           color: Colors.white12,
           width: 1.5,
         ),
       ),
-      child: Column(
+      child: ListView(
         children: [
-          Image.asset(
-            "assets/images/logo.png",
+          SvgPicture.asset(
+            'assets/images/logo.svg',
+            height: 100,
             width: 100,
           ),
-          const RailItem(
-              icon: Icons.dashboard, menuTitle: 'Dashboard', index: 0),
+          RailItem(
+              icon: SvgPicture.asset(
+                'assets/icons/dashboard_icon.svg',
+                height: 30,
+                width: 30,
+                colorFilter:
+                    ColorFilter.mode(MyColors.secondaryColor, BlendMode.srcIn),
+              ),
+              menuTitle: 'Dashboard',
+              index: 0),
           const SizedBox(height: 10),
-          const RailItem(
-              icon: Icons.leaderboard, menuTitle: 'LeaderBoard', index: 1),
+          RailItem(
+              icon: SvgPicture.asset(
+                'assets/icons/leaderboard_icon.svg',
+                height: 30,
+                width: 30,
+                colorFilter:
+                    ColorFilter.mode(MyColors.secondaryColor, BlendMode.srcIn),
+              ),
+              menuTitle: 'LeaderBoard',
+              index: 1),
           const SizedBox(height: 10),
-          const RailItem(
-              icon: Icons.shopping_cart, menuTitle: 'Commandes', index: 2),
+          RailItem(
+              icon: SvgPicture.asset(
+                'assets/icons/Order_icon.svg',
+                height: 30,
+                width: 30,
+                colorFilter:
+                    ColorFilter.mode(MyColors.secondaryColor, BlendMode.srcIn),
+              ),
+              menuTitle: 'Commandes',
+              index: 2),
           const SizedBox(height: 10),
-          const RailItem(
-              icon: Icons.phone_android_rounded,
+          RailItem(
+              icon: SvgPicture.asset(
+                'assets/icons/phone_icon.svg',
+                height: 30,
+                width: 30,
+                colorFilter:
+                    ColorFilter.mode(MyColors.secondaryColor, BlendMode.srcIn),
+              ),
               menuTitle: 'Produits',
               index: 3),
           const SizedBox(height: 10),
-          const RailItem(
-              icon: Icons.production_quantity_limits,
+          RailItem(
+              icon: SvgPicture.asset(
+                'assets/icons/litige_icon.svg',
+                height: 30,
+                width: 30,
+                colorFilter:
+                    ColorFilter.mode(MyColors.secondaryColor, BlendMode.srcIn),
+              ),
               menuTitle: 'Litige',
               index: 4),
           const SizedBox(height: 10),
-          const RailItem(
-              icon: Icons.person, menuTitle: 'Controllers', index: 5),
+          RailItem(
+              icon: SvgPicture.asset(
+                'assets/icons/controller_icon.svg',
+                height: 30,
+                width: 30,
+                colorFilter:
+                    ColorFilter.mode(MyColors.secondaryColor, BlendMode.srcIn),
+              ),
+              menuTitle: 'Controllers',
+              index: 5),
           const SizedBox(height: 10),
-          const RailItem(icon: Icons.settings, menuTitle: 'Profil', index: 6),
+          RailItem(
+              icon: SvgPicture.asset(
+                'assets/icons/account_icon.svg',
+                height: 30,
+                width: 30,
+                colorFilter:
+                    ColorFilter.mode(MyColors.secondaryColor, BlendMode.srcIn),
+              ),
+              menuTitle: 'Profil',
+              index: 6),
           const Expanded(child: SizedBox(height: 10)),
 
           // Bouton de deconnexion
@@ -84,7 +142,7 @@ class MyNavigationRail extends StatelessWidget {
               decoration: const BoxDecoration(
                 color: Colors.transparent,
               ),
-              padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
+              padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
               child: const Row(
                 children: [
                   Icon(Icons.logout, color: Colors.red),
@@ -111,7 +169,7 @@ class MyNavigationRail extends StatelessWidget {
 }
 
 class RailItem extends StatelessWidget {
-  final IconData icon;
+  final Widget icon;
   final String menuTitle;
   final int index;
 
@@ -132,21 +190,16 @@ class RailItem extends StatelessWidget {
           child: Container(
             decoration: BoxDecoration(
               color: controller.selectedIndex.value == index
-                  ? Theme.of(context).primaryColor
+                  ? MyColors.primaryColor
                   : Colors.transparent,
               boxShadow: [
                 if (controller.selectedIndex.value == index) menuItemShadow
               ],
             ),
-            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 2),
+            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
             child: Row(
               children: [
-                Icon(
-                  icon,
-                  color: controller.selectedIndex.value == index
-                      ? Colors.white
-                      : Theme.of(context).primaryColorDark,
-                ),
+                icon,
                 const SizedBox(width: 8), // Space between icon and label
                 Expanded(
                   child: Text(
@@ -158,9 +211,10 @@ class RailItem extends StatelessWidget {
                       fontWeight: controller.selectedIndex.value == index
                           ? FontWeight.bold
                           : FontWeight.normal,
-                      fontSize: controller.selectedIndex.value == index ? 20 : 14,
+                      fontSize:
+                          controller.selectedIndex.value == index ? 20 : 14,
                       fontFamily: controller.selectedIndex.value == index
-                          ? 'PatrickHandSC'
+                          ? 'Poppins'
                           : 'Poppins',
                     ),
                   ),

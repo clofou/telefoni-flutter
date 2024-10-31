@@ -49,13 +49,11 @@ class BoutiqueTable extends StatelessWidget {
               const Text(
                 "Les Boutiques",
                 style: TextStyle(
-                    fontFamily: "PatrickHandSC",
-                    fontSize: 24,
-                    color: Colors.black),
+                    fontFamily: "Poppins", fontSize: 24, color: Colors.black),
               ),
               TextButton(
                   onPressed: () {
-                     navigationController.changePage(7);
+                    navigationController.changePage(7);
                   },
                   child: const Text(
                     "Voir tout >",

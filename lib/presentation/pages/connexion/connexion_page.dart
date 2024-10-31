@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:telefoni_dashboard/data/datasources/auth_local_datasource.dart';
 import 'package:telefoni_dashboard/data/datasources/auth_remote_datasource.dart';
@@ -49,36 +50,37 @@ class ConnexionPage extends StatelessWidget {
                 // Section d'en Haut Le Login
                 Row(
                   children: [
-                    Image.asset(
-                      "assets/images/logo.png",
-                      width: 150,
-                    ),
+                    SvgPicture.asset(
+                    'assets/images/logo.svg',
+                    height: 100,
+                    width: 100,
+                  ),
                     const Text("Login",
-                        style: TextStyle(
-                            fontFamily: "PatrickHandSC", fontSize: 45)),
+                        style: TextStyle(fontFamily: "Poppins", fontSize: 45)),
                   ],
                 ),
-
+                const SizedBox(
+                  height: 40,
+                ),
                 // Les Champs de texte
                 MyCustomTextField(
-                  labelText: "Email",
                   controller: emailController,
                   suffixIcon: Icon(
                     Icons.email,
                     color: Theme.of(context).primaryColor,
                   ),
                   hintText: "Entrez Vôtre Email",
+                  labelText: "Email",
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: 30),
                 MyCustomTextField(
-                  labelText: "Mot de passe",
-                  controller: passwordController,
-                  suffixIcon: Icon(
-                    Icons.password,
-                    color: Theme.of(context).primaryColor,
-                  ),
-                  obscureText: true,
-                ),
+                    controller: passwordController,
+                    suffixIcon: Icon(
+                      Icons.password,
+                      color: Theme.of(context).primaryColor,
+                    ),
+                    obscureText: true,
+                    labelText: "Mot de passe"),
 
                 // Affichage du message d'erreur
                 Obx(() {

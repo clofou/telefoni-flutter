@@ -7,23 +7,11 @@ class VendeurTable extends StatelessWidget {
 
   final data = <VendeurTableModel>[
     VendeurTableModel(
-      rang: 1,
-      nom: "Abdoul Sidibe",
-      nombreDeReparation: 45,
-      statut: "PRO"
-    ),
+        rang: 1, nom: "Abdoul Sidibe", nombreDeReparation: 45, statut: "PRO"),
     VendeurTableModel(
-      rang: 2,
-      nom: "Beska70",
-      nombreDeReparation: 29,
-      statut: "PRO_PLUS"
-    ),
+        rang: 2, nom: "Beska70", nombreDeReparation: 29, statut: "PRO_PLUS"),
     VendeurTableModel(
-      rang: 3,
-      nom: "Nello",
-      nombreDeReparation: 1000,
-      statut: "PRO"
-    ),
+        rang: 3, nom: "Nello", nombreDeReparation: 1000, statut: "PRO"),
   ];
 
   @override
@@ -41,9 +29,7 @@ class VendeurTable extends StatelessWidget {
               const Text(
                 "Meilleurs Vendeurs",
                 style: TextStyle(
-                    fontFamily: "PatrickHandSC",
-                    fontSize: 24,
-                    color: Colors.black),
+                    fontFamily: "Poppins", fontSize: 24, color: Colors.black),
               ),
               TextButton(
                   onPressed: () {},
@@ -77,14 +63,14 @@ class VendeurTable extends StatelessWidget {
               )),
               DataColumn(
                   label: Expanded(
-                    child: Text(
-                                    "Total de ventes",
-                                    style: TextStyle(
+                child: Text(
+                  "Total de ventes",
+                  style: TextStyle(
                       fontFamily: "Poppins",
                       fontSize: 13,
                       color: Color(0xFF96A5B8)),
-                                  ),
-                  )),
+                ),
+              )),
               DataColumn(
                   label: Text(
                 "Grade",
@@ -115,9 +101,7 @@ class VendeurTable extends StatelessWidget {
                           color: Colors.black),
                     ),
                   ),
-                  DataCell(
-                    Text("${e.nombreDeReparation}")
-                  ),
+                  DataCell(Text("${e.nombreDeReparation}")),
                   DataCell(NumberStat(
                     text: e.statut,
                     color: e.statut == "VIP"

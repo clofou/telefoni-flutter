@@ -64,7 +64,7 @@ class HomeBigCard extends StatelessWidget {
                   Text(
                     "Ventes d'aujourd'hui",
                     style: TextStyle(
-                        fontFamily: "PatrickHandSC",
+                        fontFamily: "Poppins",
                         fontSize: 24,
                         color: Colors.black),
                   ),

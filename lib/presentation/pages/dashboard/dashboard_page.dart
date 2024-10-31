@@ -40,9 +40,7 @@ class DashboardPage extends StatelessWidget {
               const Text(
                 "Occasion vs Neuf",
                 style: TextStyle(
-                    fontFamily: "PatrickHandSC",
-                    fontSize: 24,
-                    color: Colors.black),
+                    fontFamily: "Poppins", fontSize: 24, color: Colors.black),
               ),
               VenteChart(),
               Row(

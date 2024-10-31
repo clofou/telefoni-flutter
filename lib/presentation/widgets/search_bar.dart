@@ -30,12 +30,7 @@ class MySearchBar extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: MyCustomTextField(
                 controller: search,
-                onChanged: (p0) {
-                  Obx(() {
-                    searchController.text = p0;
-                    return null;
-                  });
-                },
+                onChanged: (p0) {},
                 prefixIcon: Icon(
                   Icons.search,
                   color: Theme.of(context).primaryColor,
@@ -104,7 +99,7 @@ class MySearchBar extends StatelessWidget {
                       Text(
                         user.nom!,
                         style: const TextStyle(
-                          fontFamily: "PatrickHandSC",
+                          fontFamily: "Poppins",
                           fontSize: 24,
                           color: Colors.black,
                         ),
@@ -130,6 +125,8 @@ class MySearchBar extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.only(top: 20.0),
                       child: MyCustomTextField(
+                        controller: search,
+                        onChanged: (p0) {},
                         prefixIcon: Icon(
                           Icons.search,
                           color: Theme.of(context).primaryColor,
