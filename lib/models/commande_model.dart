@@ -1,5 +1,3 @@
-import 'package:telefoni_dashboard/domain/entity/commande.dart';
-
 class CommandeModel {
 final int id;
   final String nom;
@@ -32,13 +30,4 @@ final int id;
     };
   }
 
-  Commande toEntity() {
-    return Commande(
-      id: id,
-      nom: nom,
-      prix: prix,
-      statut: statut,
-      acheteur: acheteur,
-    );
-  }
 }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:telefoni_dashboard/data/models/utilisateur_nouveau_dto.dart';
+import 'package:telefoni_dashboard/models/utilisateur_nouveau_dto.dart';
 
 class NouveauxUtilisateursPage extends StatelessWidget {
   final List<UtilisateurNouveauDTO> utilisateurs;

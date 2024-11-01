@@ -1,6 +1,4 @@
 // domain/entities/vente_type.dart
-import 'package:telefoni_dashboard/domain/entity/vente_type.dart';
-
 class VenteTypeModel {
   final int mois;
   final int ventesOccasion;
@@ -20,8 +18,4 @@ class VenteTypeModel {
     );
   }
 
-  VenteType toEntity() {
-    return VenteType(
-        mois: mois, ventesOccasion: ventesOccasion, ventesNeuf: ventesNeuf);
-  }
 }

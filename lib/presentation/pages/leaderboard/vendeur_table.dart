@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:telefoni_dashboard/data/models/vendeur_table_model.dart';
+import 'package:telefoni_dashboard/models/vendeur_table_model.dart';
 import 'package:telefoni_dashboard/presentation/widgets/stat_number.dart';
 
 class VendeurTable extends StatelessWidget {

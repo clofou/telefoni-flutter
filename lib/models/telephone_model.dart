@@ -1,5 +1,3 @@
-import 'package:telefoni_dashboard/domain/entity/telephone.dart';
-
 class TelephoneModel {
   final int id;
   final String nom;
@@ -37,15 +35,5 @@ class TelephoneModel {
       'vendeur': vendeur,
       'statut': statut,
     };
-  }
-
-  Telephone toEntity() {
-    return Telephone(
-        id: id,
-        nom: nom,
-        prix: prix,
-        etat: etat,
-        vendeur: vendeur,
-        statut: statut);
   }
 }

@@ -1,13 +1,15 @@
+import 'package:dartz/dartz.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:telefoni_dashboard/core/constants.dart';
+import 'package:telefoni_dashboard/core/errors/failures.dart';
 import 'package:telefoni_dashboard/core/utils/token_manager.dart';
-import 'package:telefoni_dashboard/data/models/user_model.dart';
-import 'package:telefoni_dashboard/data/models/utilisateur_nouveau_dto.dart';
+import 'package:telefoni_dashboard/models/user_model.dart';
+import 'package:telefoni_dashboard/models/utilisateur_nouveau_dto.dart';
 
-class UserRemoteDataSource {
+class UserService {
   // Future to fetch user data with Bearer Token from local storage
-  Future<UserModel> fetchUserData() async {
+  Future<Either<Failure, UserModel>> fetchUserData() async {
     // Récupérer le Bearer token stocké
 
     final token = await TokenManager.getToken();
@@ -23,17 +25,17 @@ class UserRemoteDataSource {
     final userResponse = UserModel.fromJson(jsonDecode(response.body));
 
     if (response.statusCode == 200) {
-      return userResponse;
+      return Right(userResponse);
     } else if (response.statusCode == 401) {
       // Le token a peut-être expiré, déconnexion de l'utilisateur
       throw Exception('Token expired, please log in again.');
     } else {
-      throw Exception('Failed to load user data');
+      return Left(ServerFailure());
     }
   }
 
   // Méthode pour récupérer les utilisateurs et le pourcentage de variation
-  Future<Map<String, dynamic>> getNouveauxUtilisateursAvecPourcentage() async {
+  Future<Either<Failure, Map<String, dynamic>>> getNouveauxUtilisateursAvecPourcentage() async {
     final token = await TokenManager.getToken();
 
     final response = await http.get(
@@ -57,12 +59,12 @@ class UserRemoteDataSource {
         'pourcentageVariation': pourcentageVariation,
       });
 
-      return {
+      return Right({
         'utilisateurs': utilisateurs,
         'pourcentageVariation': pourcentageVariation,
-      };
+      });
     } else {
-      throw Exception('Failed to load utilisateurs');
+      return Left(ServerFailure());
     }
   }
 }

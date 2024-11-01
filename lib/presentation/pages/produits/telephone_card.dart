@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:telefoni_dashboard/domain/entity/telephone.dart';
+import 'package:telefoni_dashboard/models/telephone_model.dart';
 
 class TelephoneCard extends StatelessWidget {
-  final Telephone telephone;
+  final TelephoneModel telephone;
 
   const TelephoneCard({
     super.key,

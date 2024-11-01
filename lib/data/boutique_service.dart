@@ -1,15 +1,16 @@
 import 'dart:convert';
 
+import 'package:dartz/dartz.dart';
 import 'package:telefoni_dashboard/core/constants.dart';
+import 'package:telefoni_dashboard/core/errors/failures.dart';
 import 'package:telefoni_dashboard/core/utils/token_manager.dart';
-import 'package:telefoni_dashboard/data/models/boutique_model.dart';
-import 'package:telefoni_dashboard/domain/entity/boutique.dart';
+import 'package:telefoni_dashboard/models/boutique_model.dart';
 import 'package:http/http.dart' as http;
 
 class BoutiqueRemoteDatasource {
   
 
-  Future<List<BoutiqueModel>> recupererListeBoutique() async{
+  Future<Either<Failure , List<BoutiqueModel>>> recupererListeBoutique() async{
     final token = await TokenManager.getToken();
     // Envoyer la requête avec le Bearer token dans les en-têtes
     final response = await http.get(
@@ -22,11 +23,10 @@ class BoutiqueRemoteDatasource {
 
     if (response.statusCode == 200) {
       List<dynamic> data = json.decode(response.body);
-      return data.map((annonce) => BoutiqueModel.fromJson(annonce)).toList();
+      return Right(data.map((annonce) => BoutiqueModel.fromJson(annonce)).toList());
     } else {
-      throw Exception('Failed to load Boutique');
+      return Left(ServerFailure());
     }
   }
 
-  Future<void> creerBoutique(Boutique boutique) async{}
 }

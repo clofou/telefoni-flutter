@@ -1,11 +1,15 @@
-import 'package:http/http.dart' as http;
-import 'package:telefoni_dashboard/core/constants.dart';
-import 'package:telefoni_dashboard/core/utils/token_manager.dart';
 import 'dart:convert';
-import 'package:telefoni_dashboard/data/models/connexion_model.dart';
 
-class AuthRemoteDataSource {
-  Future<ConnexionModel> connexion(ConnexionModel connexionModel) async {
+import 'package:dartz/dartz.dart';
+import 'package:telefoni_dashboard/core/constants.dart';
+import 'package:telefoni_dashboard/core/errors/failures.dart';
+import 'package:telefoni_dashboard/core/utils/token_manager.dart';
+import 'package:telefoni_dashboard/models/connexion_model.dart';
+import 'package:http/http.dart' as http;
+
+class AuthService {
+
+  Future<Either<Failure, ConnexionModel>> connexion(ConnexionModel connexionModel) async {
     final response = await http.post(
       Uri.parse('$baseUrl/connexion'),
       headers: {'Content-Type': 'application/json'},
@@ -19,9 +23,15 @@ class AuthRemoteDataSource {
 
       // Stocker le token dans SharedPreferences
       await TokenManager.saveToken(connexionResponse.bearer!);
-      return connexionResponse;
+      return Right(connexionResponse);
     } else {
-      throw Exception('Impossible de se Connecter');
+      return Left(ServerFailure());
     }
   }
+
+
+  Future<void> logout() async {
+    await TokenManager.deleteToken();
+  }
+  
 }

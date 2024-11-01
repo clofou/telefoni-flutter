@@ -1,12 +1,14 @@
 import 'dart:convert';
 
+import 'package:dartz/dartz.dart';
 import 'package:telefoni_dashboard/core/constants.dart';
+import 'package:telefoni_dashboard/core/errors/failures.dart';
 import 'package:telefoni_dashboard/core/utils/token_manager.dart';
 import 'package:http/http.dart' as http;
-import 'package:telefoni_dashboard/data/models/telephone_model.dart';
+import 'package:telefoni_dashboard/models/telephone_model.dart';
 
-class ProduitRemoteDatasource {
-  Future<List<TelephoneModel>> recupererProduits() async {
+class ProduitService {
+  Future<Either<Failure, List<TelephoneModel>>> recupererProduits() async {
     final token = await TokenManager.getToken();
     // Envoyer la requête avec le Bearer token dans les en-têtes
     final response = await http.get(
@@ -19,9 +21,9 @@ class ProduitRemoteDatasource {
 
     if (response.statusCode == 200) {
       List<dynamic> data = json.decode(response.body);
-      return data.map((annonce) => TelephoneModel.fromJson(annonce)).toList();
+      return Right(data.map((annonce) => TelephoneModel.fromJson(annonce)).toList());
     } else {
-      throw Exception('Failed to load Annonces');
+      return Left(ServerFailure());
     }
   }
 }

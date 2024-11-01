@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:telefoni_dashboard/data/datasources/auth_local_datasource.dart';
-import 'package:telefoni_dashboard/data/datasources/auth_remote_datasource.dart';
-import 'package:telefoni_dashboard/data/repositories/auth_repository_impl.dart';
-import 'package:telefoni_dashboard/domain/use_cases/se_connecter.dart';
 import 'package:telefoni_dashboard/presentation/controllers/auth_controller.dart';
 import 'package:telefoni_dashboard/presentation/widgets/button.dart';
 import 'package:telefoni_dashboard/presentation/widgets/textfield.dart';
@@ -12,14 +8,7 @@ import 'package:telefoni_dashboard/presentation/widgets/textfield.dart';
 class ConnexionPage extends StatelessWidget {
   ConnexionPage({super.key});
 
-  final ConnexionController controller = Get.put(ConnexionController(
-    connexionUseCase: ConnexionUseCase(
-      repository: AuthRepositoryImpl(
-        AuthLocalDatasource(),
-        remoteDataSource: AuthRemoteDataSource(),
-      ),
-    ),
-  ));
+  final AuthController controller = Get.put(AuthController());
 
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();

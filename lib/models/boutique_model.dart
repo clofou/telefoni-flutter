@@ -1,5 +1,3 @@
-import 'package:telefoni_dashboard/domain/entity/boutique.dart';
-
 class BoutiqueModel {
   final int id;
   final String nom;
@@ -36,14 +34,5 @@ class BoutiqueModel {
       'isLocked': isLocked,
       'ventes': ventes,
     };
-  }
-
-  Boutique toEntity() {
-    return Boutique(
-        id: id,
-        nom: nom,
-        popularite: popularite,
-        isLocked: isLocked,
-        ventes: ventes);
   }
 }

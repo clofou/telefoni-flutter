@@ -1,28 +1,19 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:telefoni_dashboard/data/datasources/vente_remote_datasource.dart';
-import 'package:telefoni_dashboard/data/repositories/vente_repository_impl.dart';
-import 'package:telefoni_dashboard/domain/use_cases/creer_graphe_occasion_neuf.dart';
-import 'package:telefoni_dashboard/presentation/controllers/vente_controller.dart';
+import 'package:telefoni_dashboard/presentation/controllers/dashboard_controller.dart';
 
 
 class VenteChart extends StatelessWidget {
   VenteChart({super.key});
 
-  final VenteController venteController = Get.put(
-    VenteController(
-      GetVentesOccasionVsNeuf(
-        VenteRepositoryImpl(VenteRemoteDataSource()),
-      ),
-    ),
-  );
+
 
   @override
   Widget build(BuildContext context) {
-    return GetX<VenteController>(
-      init: Get.find<VenteController>(), // Initialise le controller via GetX
-      builder: (controller) {
+    DashboardController controller = Get.find<DashboardController>();
+
+    return Obx((){
         if (controller.isLoading.value) {
           return const Center(child: CircularProgressIndicator());
         }
@@ -49,8 +40,7 @@ class VenteChart extends StatelessWidget {
             ),
           ),
         );
-      },
-    );
+    });
   }
 
   // Création des données de titres
@@ -110,7 +100,7 @@ class VenteChart extends StatelessWidget {
   }
 
   // Génération des données pour le graphique
-  List<BarChartGroupData> _createBarGroups(VenteController controller) {
+  List<BarChartGroupData> _createBarGroups(DashboardController controller) {
     return controller.mesventes.map((vente) {
       return BarChartGroupData(
         x: vente.mois - 1, // Aligner sur l'index des mois

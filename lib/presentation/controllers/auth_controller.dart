@@ -1,19 +1,19 @@
 // lib/presentation/controllers/connexion_controller.dart
 
 import 'package:get/get.dart';
-import 'package:telefoni_dashboard/domain/use_cases/se_connecter.dart';
 import 'package:telefoni_dashboard/core/errors/failures.dart';
+import 'package:telefoni_dashboard/data/auth_service.dart';
+import 'package:telefoni_dashboard/models/connexion_model.dart';
 
-class ConnexionController extends GetxController {
-  final ConnexionUseCase connexionUseCase;
+class AuthController extends GetxController {
+  final AuthService connexionUseCase = AuthService();
   var isLoading = false.obs;
   var errorMessage = ''.obs;
 
-  ConnexionController({required this.connexionUseCase});
 
   Future<void> login(String email, String motDePasse) async {
     isLoading.value = true;
-    final result = await connexionUseCase.execute(email, motDePasse);
+    final result = await connexionUseCase.connexion(ConnexionModel(email: email, motDePasse: motDePasse));
 
     result.fold(
       (failure) {
@@ -26,7 +26,7 @@ class ConnexionController extends GetxController {
       },
       (connexion) {
         // En cas de succès
-        storeToken(connexion.token);
+        print(connexion);
         Get.toNamed("/template"); // Naviguer vers la page Dashboard
       },
     );
@@ -34,7 +34,7 @@ class ConnexionController extends GetxController {
     isLoading.value = false;
   }
 
-  void storeToken(String token) {
-    // Ici on peut utiliser un package comme SharedPreferences ou SecureStorage pour stocker le token
+  deconnexion(){
+    connexionUseCase.logout();
   }
 }

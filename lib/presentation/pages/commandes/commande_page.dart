@@ -1,25 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:telefoni_dashboard/data/datasources/commande_remote_data_source.dart';
-import 'package:telefoni_dashboard/data/repositories/commande_repository_impl.dart';
-import 'package:telefoni_dashboard/domain/use_cases/recupere_nombre_commande.dart';
-import 'package:telefoni_dashboard/domain/use_cases/recuperer_liste_commande.dart';
 import 'package:telefoni_dashboard/presentation/controllers/commande_controller.dart';
 import 'package:telefoni_dashboard/presentation/widgets/search_bar.dart';
 
 class CommandePage extends StatelessWidget {
   CommandePage({super.key});
 
-  final CommandeController commandeController = Get.put(CommandeController(
-    recupereNombreCommande: RecupereNombreCommande(
-      repository: CommandeRepositoryImpl(
-          commandeRemoteDataSource: CommandeRemoteDataSource()),
-    ),
-    recupererListeCommande: RecupererListeCommande(
-      repository: CommandeRepositoryImpl(
-          commandeRemoteDataSource: CommandeRemoteDataSource()),
-    ),
-  ));
+  final CommandeController commandeController = Get.put(CommandeController());
 
   @override
   Widget build(BuildContext context) {

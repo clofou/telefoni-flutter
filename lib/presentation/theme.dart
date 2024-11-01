@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 
-class Apptheme {
-  static MyColors? myColors;
+class Apptheme1 {
+  static BoxShadow menuItemShadow = const BoxShadow(
+    offset: Offset(0, 20),
+    blurRadius: 50,
+    spreadRadius: 0,
+    color: Color(0x1A374557));
 }
 
 class MyColors {
@@ -10,3 +14,5 @@ class MyColors {
   static Color grey = const Color(0xFF919D92);
   static Color background = const Color(0xFFFAF0CA);
 }
+
+

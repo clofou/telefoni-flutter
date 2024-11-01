@@ -1,25 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:telefoni_dashboard/data/datasources/vente_remote_datasource.dart';
-import 'package:telefoni_dashboard/data/repositories/vente_repository_impl.dart';
-import 'package:telefoni_dashboard/domain/use_cases/creer_graphe_occasion_neuf.dart';
-import 'package:telefoni_dashboard/presentation/controllers/vente_controller.dart';
+import 'package:telefoni_dashboard/presentation/controllers/dashboard_controller.dart';
 import 'package:telefoni_dashboard/presentation/pages/dashboard/home_big_card.dart';
 import 'package:telefoni_dashboard/presentation/widgets/occasion_neuf.dart';
 
 class DashboardPage extends StatelessWidget {
-  DashboardPage({super.key});
+  const DashboardPage({super.key});
 
-  final VenteController venteController = Get.put(
-    VenteController(
-      GetVentesOccasionVsNeuf(
-        VenteRepositoryImpl(VenteRemoteDataSource()),
-      ),
-    ),
-  );
 
   @override
   Widget build(BuildContext context) {
+    DashboardController dashboardController = Get.find<DashboardController>();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -81,7 +72,7 @@ class DashboardPage extends StatelessWidget {
                     width: 20,
                   ),
                   Obx(() {
-                    return Text("${venteController.totalVentesOccasion.value}");
+                    return Text("${dashboardController.totalVentesOccasion.value}");
                   })
                 ],
               ),
@@ -126,7 +117,7 @@ class DashboardPage extends StatelessWidget {
                     width: 20,
                   ),
                   Obx(() {
-                    return Text("${venteController.totalVentesNeuf.value}");
+                    return Text("${dashboardController.totalVentesNeuf.value}");
                   })
                 ],
               ),

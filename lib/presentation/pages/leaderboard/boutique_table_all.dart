@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:telefoni_dashboard/data/models/boutique_table_model.dart';
+import 'package:telefoni_dashboard/models/boutique_table_model.dart';
 import 'package:telefoni_dashboard/presentation/controllers/navigation/navigation_controller.dart';
 import 'package:telefoni_dashboard/presentation/widgets/isLock_widget.dart';
 import 'package:telefoni_dashboard/presentation/widgets/progress_indicator.dart';

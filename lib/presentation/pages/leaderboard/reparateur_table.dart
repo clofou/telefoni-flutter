@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:telefoni_dashboard/data/models/reparateur_table_model.dart';
+import 'package:telefoni_dashboard/models/reparateur_table_model.dart';
 import 'package:telefoni_dashboard/presentation/widgets/stat_number.dart';
 
 class ReparateurTable extends StatelessWidget {

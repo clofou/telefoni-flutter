@@ -1,41 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:telefoni_dashboard/core/constants.dart';
-import 'package:telefoni_dashboard/data/datasources/auth_local_datasource.dart';
-import 'package:telefoni_dashboard/data/datasources/auth_remote_datasource.dart';
-import 'package:telefoni_dashboard/data/datasources/user_remote_datasource.dart';
-import 'package:telefoni_dashboard/data/repositories/auth_repository_impl.dart';
-import 'package:telefoni_dashboard/data/repositories/user_repository_impl.dart';
-import 'package:telefoni_dashboard/domain/use_cases/recuper_current_user_info.dart';
-import 'package:telefoni_dashboard/domain/use_cases/se_deconnecter.dart';
-import 'package:telefoni_dashboard/presentation/controllers/deconnexion_controller.dart';
+import 'package:telefoni_dashboard/presentation/controllers/auth_controller.dart';
 import 'package:telefoni_dashboard/presentation/controllers/navigation/navigation_controller.dart';
-import 'package:telefoni_dashboard/presentation/controllers/user_controller.dart';
 import 'package:telefoni_dashboard/presentation/theme.dart';
 
 class MyNavigationRail extends StatelessWidget {
-  MyNavigationRail({super.key});
-
-  final DeconnexionController deconnexionController =
-      Get.put(DeconnexionController(
-    seDeconnecterUseCase: SeDeconnecterUseCase(
-      repository: AuthRepositoryImpl(
-        AuthLocalDatasource(),
-        remoteDataSource: AuthRemoteDataSource(),
-      ),
-    ),
-  ));
-  // Initialiser le contrôleur
-
-  final UserController userController = Get.put(UserController(
-      recuperCurrentUserInfo: RecuperCurrentUserInfo(
-    repository:
-        UserRepositoryImpl(userRemoteDataSource: UserRemoteDataSource()),
-  )));
+  const MyNavigationRail({super.key});
 
   @override
   Widget build(BuildContext context) {
+    AuthController controller = Get.put(AuthController());
+
     return Container(
       width: MediaQuery.of(context).size.width * 0.25,
       padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -136,7 +112,7 @@ class MyNavigationRail extends StatelessWidget {
           InkWell(
             onTap: () {
               // Ajoute la logique de déconnexion ici
-              deconnexionController.showLogoutConfirmation();
+              controller.deconnexion();
             },
             child: Container(
               decoration: const BoxDecoration(
@@ -181,49 +157,49 @@ class RailItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetX<NavigationController>(
-      builder: (controller) {
-        return InkWell(
-          onTap: () {
-            controller.changePage(index);
-          },
-          child: Container(
-            decoration: BoxDecoration(
-              color: controller.selectedIndex.value == index
-                  ? MyColors.primaryColor
-                  : Colors.transparent,
-              boxShadow: [
-                if (controller.selectedIndex.value == index) menuItemShadow
-              ],
-            ),
-            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-            child: Row(
-              children: [
-                icon,
-                const SizedBox(width: 8), // Space between icon and label
-                Expanded(
-                  child: Text(
-                    menuTitle,
-                    style: TextStyle(
-                      color: controller.selectedIndex.value == index
-                          ? Colors.white
-                          : Colors.black,
-                      fontWeight: controller.selectedIndex.value == index
-                          ? FontWeight.bold
-                          : FontWeight.normal,
-                      fontSize:
-                          controller.selectedIndex.value == index ? 20 : 14,
-                      fontFamily: controller.selectedIndex.value == index
-                          ? 'Poppins'
-                          : 'Poppins',
-                    ),
+    NavigationController controller = Get.find<NavigationController>();
+
+    return Obx(() {
+      return InkWell(
+        onTap: () {
+          controller.changePage(index);
+        },
+        child: Container(
+          decoration: BoxDecoration(
+            color: controller.selectedIndex.value == index
+                ? MyColors.primaryColor
+                : Colors.transparent,
+            boxShadow: [
+              if (controller.selectedIndex.value == index)
+                Apptheme1.menuItemShadow
+            ],
+          ),
+          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+          child: Row(
+            children: [
+              icon,
+              const SizedBox(width: 8), // Space between icon and label
+              Expanded(
+                child: Text(
+                  menuTitle,
+                  style: TextStyle(
+                    color: controller.selectedIndex.value == index
+                        ? Colors.white
+                        : Colors.black,
+                    fontWeight: controller.selectedIndex.value == index
+                        ? FontWeight.bold
+                        : FontWeight.normal,
+                    fontSize: controller.selectedIndex.value == index ? 20 : 14,
+                    fontFamily: controller.selectedIndex.value == index
+                        ? 'Poppins'
+                        : 'Poppins',
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
-        );
-      },
-    );
+        ),
+      );
+    });
   }
 }

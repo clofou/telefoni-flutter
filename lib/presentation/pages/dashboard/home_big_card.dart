@@ -1,54 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:telefoni_dashboard/data/datasources/user_remote_datasource.dart';
-import 'package:telefoni_dashboard/data/datasources/vente_remote_datasource.dart';
-import 'package:telefoni_dashboard/data/repositories/user_repository_impl.dart';
-import 'package:telefoni_dashboard/data/repositories/vente_repository_impl.dart';
-import 'package:telefoni_dashboard/domain/use_cases/recuperer_nouveau_utilisateur.dart';
-import 'package:telefoni_dashboard/domain/use_cases/recuperer_vente_total.dart';
-import 'package:telefoni_dashboard/presentation/controllers/display_vente_total_controller.dart';
+import 'package:telefoni_dashboard/presentation/controllers/dashboard_controller.dart';
 import 'package:telefoni_dashboard/presentation/pages/dashboard/nouveau_utilisateur_page.dart';
-import 'package:telefoni_dashboard/presentation/widgets/new_user_controller.dart';
 import 'package:telefoni_dashboard/presentation/widgets/sell_card.dart';
 import 'package:get/get.dart';
-import 'package:telefoni_dashboard/data/datasources/commande_remote_data_source.dart';
-import 'package:telefoni_dashboard/data/repositories/commande_repository_impl.dart';
-import 'package:telefoni_dashboard/domain/use_cases/recupere_nombre_commande.dart';
-import 'package:telefoni_dashboard/domain/use_cases/recuperer_liste_commande.dart';
-import 'package:telefoni_dashboard/presentation/controllers/commande_controller.dart';
 
 class HomeBigCard extends StatelessWidget {
-  HomeBigCard({super.key});
+  const HomeBigCard({super.key});
 
-  final CommandeController commandeController = Get.put(CommandeController(
-    recupereNombreCommande: RecupereNombreCommande(
-      repository: CommandeRepositoryImpl(
-          commandeRemoteDataSource: CommandeRemoteDataSource()),
-    ),
-    recupererListeCommande: RecupererListeCommande(
-      repository: CommandeRepositoryImpl(
-          commandeRemoteDataSource: CommandeRemoteDataSource()),
-    ),
-  ));
 
-  final DisplayVenteTotalController displayVenteTotalController =
-      Get.put(DisplayVenteTotalController(
-    recupererVenteTotal: RecupererVenteTotal(
-      repository: VenteRepositoryImpl(VenteRemoteDataSource()),
-    ),
-  ));
-
-  final UtilisateurController utilisateurController =
-      Get.put(UtilisateurController(
-    recupereNouveauxUtilisateurs: RecupereNouveauxUtilisateurs(
-      repository: UserRepositoryImpl(
-        userRemoteDataSource: UserRemoteDataSource(),
-      ),
-    ),
-  ));
 
   @override
   Widget build(BuildContext context) {
+    DashboardController controller = Get.find<DashboardController>();
+
     return Container(
       padding: const EdgeInsets.all(10),
       width: double.infinity,
@@ -117,10 +82,8 @@ class HomeBigCard extends StatelessWidget {
                 return SellCard(
                     iconPath: "assets/icons/vente_icon.svg",
                     title:
-                        "CFA ${displayVenteTotalController.venteTotal.value.totalMontantVentes} ${displayVenteTotalController.suffix.value}",
+                        "CFA ${controller.venteTotal.value}",
                     subtitle: "Vente Total",
-                    info:
-                        "${displayVenteTotalController.venteTotal.value.pourcentageVariation}% depuis hier",
                     backgroundColor: const Color.fromARGB(170, 252, 190, 203),
                     foregroundColor: const Color(0xFFFA5A7D));
               }),
@@ -130,9 +93,7 @@ class HomeBigCard extends StatelessWidget {
               Obx(() {
                 return SellCard(
                     iconPath: "assets/icons/commande_icon.svg",
-                    title: commandeController.commandes.length.toString(),
-                    info:
-                        "${commandeController.nombreCommande.value}% depuis hier",
+                    title: controller.totalCommande.toString(),
                     subtitle: "Commandes",
                     backgroundColor: const Color.fromARGB(255, 247, 226, 169),
                     foregroundColor: const Color.fromARGB(255, 212, 162, 22));
@@ -145,17 +106,17 @@ class HomeBigCard extends StatelessWidget {
                   onTap: () {
                     Get.to(
                       () => NouveauxUtilisateursPage(
-                        utilisateurs: utilisateurController.utilisateurs,
+                        utilisateurs: controller.utilisateurs,
                         pourcentageVariation:
-                            utilisateurController.pourcentageVariation.value,
+                            controller.userIncrease.value,
                       ),
                     );
                   },
                   child: SellCard(
                     iconPath: "assets/icons/newuser_icon.svg",
-                    title: utilisateurController.utilisateurs.length.toString(),
+                    title: controller.utilisateurs.length.toString(),
                     info:
-                        "${utilisateurController.pourcentageVariation.value}% depuis hier",
+                        "${controller.userIncrease.value}% depuis hier",
                     subtitle: "Nouveaux utilisateurs",
                     backgroundColor: const Color.fromARGB(255, 214, 247, 162),
                     foregroundColor: const Color.fromARGB(255, 153, 226, 35),
