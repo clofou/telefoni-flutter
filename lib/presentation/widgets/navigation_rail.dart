@@ -106,7 +106,7 @@ class MyNavigationRail extends StatelessWidget {
               ),
               menuTitle: 'Profil',
               index: 6),
-          const Expanded(child: SizedBox(height: 10)),
+          const SizedBox(height: 10),
 
           // Bouton de deconnexion
           InkWell(
@@ -123,15 +123,13 @@ class MyNavigationRail extends StatelessWidget {
                 children: [
                   Icon(Icons.logout, color: Colors.red),
                   SizedBox(width: 8),
-                  Expanded(
-                    child: Text(
-                      "Se Deconnecter",
-                      style: TextStyle(
-                        color: Colors.red,
-                        fontWeight: FontWeight.normal,
-                        fontSize: 16,
-                        fontFamily: 'Poppins',
-                      ),
+                  Text(
+                    "Se Deconnecter",
+                    style: TextStyle(
+                      color: Colors.red,
+                      fontWeight: FontWeight.normal,
+                      fontSize: 16,
+                      fontFamily: 'Poppins',
                     ),
                   ),
                 ],
@@ -179,21 +177,19 @@ class RailItem extends StatelessWidget {
             children: [
               icon,
               const SizedBox(width: 8), // Space between icon and label
-              Expanded(
-                child: Text(
-                  menuTitle,
-                  style: TextStyle(
-                    color: controller.selectedIndex.value == index
-                        ? Colors.white
-                        : Colors.black,
-                    fontWeight: controller.selectedIndex.value == index
-                        ? FontWeight.bold
-                        : FontWeight.normal,
-                    fontSize: controller.selectedIndex.value == index ? 20 : 14,
-                    fontFamily: controller.selectedIndex.value == index
-                        ? 'Poppins'
-                        : 'Poppins',
-                  ),
+              Text(
+                menuTitle,
+                style: TextStyle(
+                  color: controller.selectedIndex.value == index
+                      ? Colors.white
+                      : Colors.black,
+                  fontWeight: controller.selectedIndex.value == index
+                      ? FontWeight.bold
+                      : FontWeight.normal,
+                  fontSize: controller.selectedIndex.value == index ? 20 : 14,
+                  fontFamily: controller.selectedIndex.value == index
+                      ? 'Poppins'
+                      : 'Poppins',
                 ),
               ),
             ],

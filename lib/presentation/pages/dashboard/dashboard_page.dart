@@ -7,7 +7,6 @@ import 'package:telefoni_dashboard/presentation/widgets/occasion_neuf.dart';
 class DashboardPage extends StatelessWidget {
   const DashboardPage({super.key});
 
-
   @override
   Widget build(BuildContext context) {
     DashboardController dashboardController = Get.find<DashboardController>();
@@ -17,7 +16,7 @@ class DashboardPage extends StatelessWidget {
         const SizedBox(
           height: 10,
         ),
-        HomeBigCard(),
+        const HomeBigCard(),
         const SizedBox(
           height: 20,
         ),
@@ -72,7 +71,8 @@ class DashboardPage extends StatelessWidget {
                     width: 20,
                   ),
                   Obx(() {
-                    return Text("${dashboardController.totalVentesOccasion.value}");
+                    return Text(
+                        "${dashboardController.totalVentesOccasion.value}");
                   })
                 ],
               ),

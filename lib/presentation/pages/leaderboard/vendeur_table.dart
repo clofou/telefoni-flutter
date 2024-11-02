@@ -62,15 +62,13 @@ class VendeurTable extends StatelessWidget {
                     color: Color(0xFF96A5B8)),
               )),
               DataColumn(
-                  label: Expanded(
-                child: Text(
-                  "Total de ventes",
-                  style: TextStyle(
-                      fontFamily: "Poppins",
-                      fontSize: 13,
-                      color: Color(0xFF96A5B8)),
-                ),
-              )),
+                  label: Text(
+                    "Total de ventes",
+                    style: TextStyle(
+                        fontFamily: "Poppins",
+                        fontSize: 13,
+                        color: Color(0xFF96A5B8)),
+                  )),
               DataColumn(
                   label: Text(
                 "Grade",

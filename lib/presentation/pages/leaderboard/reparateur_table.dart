@@ -65,15 +65,13 @@ class ReparateurTable extends StatelessWidget {
                     color: Color(0xFF96A5B8)),
               )),
               DataColumn(
-                  label: Expanded(
-                child: Text(
-                  "Total de reparation",
-                  style: TextStyle(
-                      fontFamily: "Poppins",
-                      fontSize: 13,
-                      color: Color(0xFF96A5B8)),
-                ),
-              )),
+                  label: Text(
+                    "Total de reparation",
+                    style: TextStyle(
+                        fontFamily: "Poppins",
+                        fontSize: 13,
+                        color: Color(0xFF96A5B8)),
+                  )),
               DataColumn(
                   label: Text(
                 "Grade",

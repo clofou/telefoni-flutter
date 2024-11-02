@@ -1,32 +1,37 @@
 import 'dart:convert';
 
 import 'package:dartz/dartz.dart';
+import 'package:dio/dio.dart';
 import 'package:telefoni_dashboard/core/constants.dart';
 import 'package:telefoni_dashboard/core/errors/failures.dart';
-import 'package:telefoni_dashboard/core/utils/token_manager.dart';
-import 'package:telefoni_dashboard/models/boutique_model.dart';
-import 'package:http/http.dart' as http;
+import 'package:telefoni_dashboard/data/Dio/dio_client.dart';
 
-class BoutiqueRemoteDatasource {
-  
+class BoutiqueService {
+  Dio dio = DioClient().dio;
 
-  Future<Either<Failure , List<BoutiqueModel>>> recupererListeBoutique() async{
-    final token = await TokenManager.getToken();
-    // Envoyer la requête avec le Bearer token dans les en-têtes
-    final response = await http.get(
-      Uri.parse('$baseUrl/annonce/admin'),
-      headers: {
-        'Authorization': 'Bearer $token', // Ajouter le token ici
-        'Content-Type': 'application/json',
-      },
-    );
+  Future<Either<Failure, List<dynamic>>> recupererListeBoutique() async {
+    Response response = await dio.get('$baseUrl/admin/boutique/liste');
 
     if (response.statusCode == 200) {
-      List<dynamic> data = json.decode(response.body);
-      return Right(data.map((annonce) => BoutiqueModel.fromJson(annonce)).toList());
+      final body = response.data;
+      print(body);
+      return Right(body);
     } else {
       return Left(ServerFailure());
     }
   }
 
+  Future<Either<Failure, dynamic>> ajouterBoutique(
+      Map<String, dynamic> boutique) async {
+    Response response = await dio.post('$baseUrl/admin/boutique/ajout',
+        data: boutique);
+
+    if (response.statusCode == 200) {
+      final body = response.data;
+      print(body);
+      return Right(body);
+    } else {
+      return Left(ServerFailure());
+    }
+  }
 }

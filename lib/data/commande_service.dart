@@ -3,15 +3,15 @@ import 'package:http/http.dart' as http;
 import 'package:telefoni_dashboard/core/constants.dart';
 import 'package:telefoni_dashboard/core/errors/failures.dart';
 import 'package:telefoni_dashboard/core/utils/token_manager.dart';
-import 'package:telefoni_dashboard/models/commande_model.dart';
 import 'dart:convert';
 
 class CommandeService {
-  Future<Either<Failure,List<CommandeModel>>> getCommandes() async {
+
+  Future<Either<Failure,List<dynamic>>> getCommandes() async {
     final token = await TokenManager.getToken();
     // Envoyer la requête avec le Bearer token dans les en-têtes
     final response = await http.get(
-      Uri.parse('$baseUrl/commande'),
+      Uri.parse('$baseUrl/admin/commande/liste'),
       headers: {
         'Authorization': 'Bearer $token', // Ajouter le token ici
         'Content-Type': 'application/json',
@@ -20,7 +20,8 @@ class CommandeService {
 
     if (response.statusCode == 200) {
       List<dynamic> data = json.decode(response.body);
-      return Right(data.map((commande) => CommandeModel.fromJson(commande)).toList());
+      print("BBBBBBBBBBBBBBBBBB $data");
+      return Right(data);
     } else {
       return Left(ServerFailure());    }
   }

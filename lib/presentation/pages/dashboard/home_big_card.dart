@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:telefoni_dashboard/presentation/controllers/dashboard_controller.dart';
-import 'package:telefoni_dashboard/presentation/pages/dashboard/nouveau_utilisateur_page.dart';
 import 'package:telefoni_dashboard/presentation/widgets/sell_card.dart';
 import 'package:get/get.dart';
 
@@ -102,25 +101,14 @@ class HomeBigCard extends StatelessWidget {
                 width: 20,
               ),
               Obx(() {
-                return GestureDetector(
-                  onTap: () {
-                    Get.to(
-                      () => NouveauxUtilisateursPage(
-                        utilisateurs: controller.utilisateurs,
-                        pourcentageVariation:
-                            controller.userIncrease.value,
-                      ),
-                    );
-                  },
-                  child: SellCard(
-                    iconPath: "assets/icons/newuser_icon.svg",
-                    title: controller.utilisateurs.length.toString(),
-                    info:
-                        "${controller.userIncrease.value}% depuis hier",
-                    subtitle: "Nouveaux utilisateurs",
-                    backgroundColor: const Color.fromARGB(255, 214, 247, 162),
-                    foregroundColor: const Color.fromARGB(255, 153, 226, 35),
-                  ),
+                return SellCard(
+                  iconPath: "assets/icons/newuser_icon.svg",
+                  title: controller.newUsers.value.toString(),
+                  info:
+                      "${controller.userIncrease.value}% depuis hier",
+                  subtitle: "Nouveaux utilisateurs",
+                  backgroundColor: const Color.fromARGB(255, 214, 247, 162),
+                  foregroundColor: const Color.fromARGB(255, 153, 226, 35),
                 );
               }),
             ],

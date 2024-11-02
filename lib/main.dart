@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:telefoni_dashboard/presentation/controllers/dashboard_controller.dart';
 import 'package:telefoni_dashboard/presentation/controllers/navigation/navigation_controller.dart';
+import 'package:telefoni_dashboard/presentation/controllers/user_controller.dart';
 import 'package:telefoni_dashboard/presentation/theme/theme.dart';
 import 'package:telefoni_dashboard/routes.dart';
 
@@ -16,6 +17,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     Get.put(DashboardController());
     Get.put(NavigationController());
+    Get.put(UserController());
     return GetMaterialApp(
       title: 'Telfoni',
       initialRoute: '/',

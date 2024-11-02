@@ -8,7 +8,7 @@ import 'package:http/http.dart' as http;
 import 'package:telefoni_dashboard/models/telephone_model.dart';
 
 class ProduitService {
-  Future<Either<Failure, List<TelephoneModel>>> recupererProduits() async {
+  Future<Either<Failure, List<dynamic>>> recupererProduits() async {
     final token = await TokenManager.getToken();
     // Envoyer la requête avec le Bearer token dans les en-têtes
     final response = await http.get(

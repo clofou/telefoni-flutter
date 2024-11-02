@@ -121,18 +121,16 @@ class MySearchBar extends StatelessWidget {
                   ),
                   const SizedBox(width: 20),
                   // Barre de recherche
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 20.0),
-                      child: MyCustomTextField(
-                        controller: search,
-                        onChanged: (p0) {},
-                        prefixIcon: Icon(
-                          Icons.search,
-                          color: Theme.of(context).primaryColor,
-                        ),
-                        hintText: "Recherche Ici ...",
+                  Padding(
+                    padding: const EdgeInsets.only(top: 20.0),
+                    child: MyCustomTextField(
+                      controller: search,
+                      onChanged: (p0) {},
+                      prefixIcon: Icon(
+                        Icons.search,
+                        color: Theme.of(context).primaryColor,
                       ),
+                      hintText: "Recherche Ici ...",
                     ),
                   ),
                 ],
